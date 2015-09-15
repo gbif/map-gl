@@ -1,0 +1,27 @@
+package org.gbif.mapgl.v1;
+
+option optimize_for = LITE_RUNTIME;
+
+/**
+ * A basic tile with a set of channels for x,y located pixels.
+ * The data channel must the same length as the pixels so that the data matches the pixel - that is, the
+ * channel data item at index 0 represents the data for the pixel defined by the pixel indexed at x[0] and y[0].
+ *
+ * This is a simple tile used only for demonstration purposes.  Changes to make:
+ *  i.   Make the pixels relative to the previous (improves compression)
+ *  ii.  Support necessary metadata for channels
+ *  iii. Review all types and ensure the smallest is used (are uint32 the smallest?)
+ *  iv.  ZigZag encode if needed
+ */
+message DatacubeTile {
+  // X and Y arrays to locate the pixel
+  repeated uint32 x = 1 [ packed = true ];
+  repeated uint32 y = 2 [ packed = true ];
+
+  message Channel {
+    repeated uint32 value = 1 [ packed = true ];
+  }
+
+  // each channel is of the same length as x and Y
+  repeated Channel channel = 3;
+}
