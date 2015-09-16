@@ -27,71 +27,12 @@ import no.ecc.vectortile.VectorTileEncoder;
 public class VectorTileGenerator {
 
   private static final Pattern SPLITTER = Pattern.compile("\t");
-  private static final GeometryFactory GEOMETRY_FACTORY = new GeometryFactory();
-
-  /**
-   * Expects inpath numZooms and will output into /tmp.
-   * Inpath should be a GZipInput file.
-   */
-  public static void main(String[] args) throws IOException {
-    int zooms = Integer.parseInt(args[1]);
-    Map<Key, VectorTileEncoder> tiles = Maps.newHashMap();
-
-    try (
-      BufferedReader in = new BufferedReader(
-        new InputStreamReader(new GZIPInputStream(new FileInputStream(new File(args[0])))))
-    ) {
-      String line = in.readLine();
-      int rowCount = 0;
-
-
-      while (line != null) {
-
-        String[] fields = SPLITTER.split(line);
-        double lat = Double.parseDouble(fields[0]);
-        double lng = Double.parseDouble(fields[1]);
-        int count = Integer.parseInt(fields[2]);
-
-        for (int zoom = 0; zoom < zooms; zoom++) {
-
-          if (MercatorProjectionUtil.isPlottable(lat, lng)) {
-            int x = MercatorProjectionUtil.toTileX(lng, zoom);
-            int y = MercatorProjectionUtil.toTileY(lat, zoom);
-            Map<String, String> attributes = Maps.newHashMap();
-            attributes.put("count", String.valueOf(count));
-
-            Key key = new Key(x,y,zoom);
-            VectorTileEncoder encoder = tiles.get(key);
-            if (encoder == null) {
-              encoder = new VectorTileEncoder(4096, 8, true);
-              tiles.put(key, encoder);
-            }
-            encoder.addFeature("count", attributes, GEOMETRY_FACTORY.createPoint(new Coordinate(x,y)));
-          }
-        }
-
-        if (++rowCount % 10000 == 0) {
-          System.out.println(rowCount);
-        }
-
-        line = in.readLine();
-      }
-    }
-
-    for (Map.Entry<Key, VectorTileEncoder> e : tiles.entrySet()) {
-      try (
-        OutputStream os = new GZIPOutputStream(new FileOutputStream("/tmp/vt-" + e.getKey().getZ()
-                                                                    + "-" + e.getKey().getX() + "-" + e.getKey().getY() + ".pbf.gz"));
-      ) {
-        os.write(e.getValue().encode());
-      }
-    }  }
 
   private static final class Key {
+
     private final int x;
     private final int y;
     private final int z;
-
 
     private Key(int x, int y, int z) {
       this.x = x;
@@ -126,6 +67,70 @@ public class VectorTileGenerator {
 
     public int getZ() {
       return z;
+    }
+  }
+
+
+  /**
+   * Expects inpath numZooms and will output into /tmp.
+   * Inpath should be a GZipInput file.
+   */
+  public static void main(String[] args) throws IOException {
+    int zooms = Integer.parseInt(args[1]);
+    Map<Key, TileBuilder> tiles = Maps.newHashMap();
+
+    try (
+      BufferedReader in = new BufferedReader(
+        new InputStreamReader(new GZIPInputStream(new FileInputStream(new File(args[0])))))
+    ) {
+      String line = in.readLine();
+      int rowCount = 0;
+
+      while (line != null) {
+
+        String[] fields = SPLITTER.split(line);
+        double lat = Double.parseDouble(fields[0]);
+        double lng = Double.parseDouble(fields[1]);
+        int count = Integer.parseInt(fields[2]);
+
+        for (int zoom = 0; zoom < zooms; zoom++) {
+
+          if (MercatorProjectionUtil.isPlottable(lat, lng)) {
+            int x = MercatorProjectionUtil.toTileX(lng, zoom);
+            int y = MercatorProjectionUtil.toTileY(lat, zoom);
+            Map<String, String> attributes = Maps.newHashMap();
+            attributes.put("count", String.valueOf(count));
+
+            Key key = new Key(x, y, zoom);
+            TileBuilder b = tiles.get(key);
+            if (b == null) {
+              b = new TileBuilder();
+              tiles.put(key, b);
+            }
+            b.collect(zoom, lat, lng, count);
+          }
+        }
+
+        if (++rowCount % 10000 == 0) {
+          System.out.println(rowCount);
+        }
+
+        line = in.readLine();
+      }
+    }
+
+    for (Map.Entry<Key, TileBuilder> e : tiles.entrySet()) {
+      try (
+        OutputStream os = new GZIPOutputStream(new FileOutputStream("/tmp/vt-"
+                                                                    + e.getKey().getZ()
+                                                                    + "-"
+                                                                    + e.getKey().getX()
+                                                                    + "-"
+                                                                    + e.getKey().getY()
+                                                                    + ".pbf.gz"));
+      ) {
+        os.write(e.getValue().build());
+      }
     }
   }
 }
