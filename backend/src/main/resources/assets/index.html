@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoidGltcm9iZXJ0c29uMTAwIiwiYSI6IlRxTFEzOUkifQ.UlS8frv1bZZPdUfDp-zolQ';
+var map = new mapboxgl.Map({
+  container: 'map', // container id
+  style: 'http://localhost:8080/simple.json', //stylesheet location
+  center: [-0, 0], // starting position
+  zoom: 0 // starting zoom
+});
+
+
+map.on('style.load', function() {
+
+
+
+
+
+map.addSource('gbif', {
+        "type": "vector",
+        "tiles": [
+            "http://localhost:8080/api/{z}/{x}/{y}/vectortile.pbf"
+        ],
+        "maxzoom": 10
+    });
+
+    map.addLayer({
+        "id": "gbif0",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "filter": ["all", [">=", "count", 0],["<", "count", 10]],
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": 1,
+          "circle-color": "#FFFF00"
+        }
+    });
+    map.addLayer({
+        "id": "gbif1",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "filter": ["all", [">=", "count", 10],["<", "count", 100]],
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": 1,
+          "circle-color": "#FFCC00"
+        }
+    });
+    map.addLayer({
+        "id": "gbif2",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "filter": ["all", [">=", "count", 100],["<", "count", 1000]],
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": 1,
+          "circle-color": "#FF9900"
+        }
+    });
+    map.addLayer({
+        "id": "gbif3",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "filter": ["all", [">=", "count", 1000],["<", "count", 10000]],
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": 1,
+          "circle-color": "#FF6600"
+        }
+    });
+    map.addLayer({
+        "id": "gbif4",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "filter": ["all", [">=", "count", 10000],["<", "count", 100000]],
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": 1,
+          "circle-color": "#FF3300"
+        }
+    });
+    map.addLayer({
+        "id": "gbif5",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "filter": [">=", "count", 100000],
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": 1,
+          "circle-color": "#CC0000"
+        }
+    });
+});
+
+// "filter": ["<=", "count", "100"],
+
+
+</script>
+
+</body>
+</html>
