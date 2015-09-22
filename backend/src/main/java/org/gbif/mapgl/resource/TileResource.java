@@ -9,10 +9,12 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import com.codahale.metrics.annotation.Timed;
@@ -74,8 +76,10 @@ public final class TileResource {
   @Path("{z}/{x}/{y}/datacube.pbf")
   @Timed
   @Produces(MediaType.APPLICATION_OCTET_STREAM)
-  public byte[] asDatacubeFormat(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y) {
+  public byte[] asDatacubeFormat(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y,
+                                 @Context HttpServletResponse response) {
     try {
+      addAllAccessControlHeader(response);
       return DC_CACHE.get(new XYZ(x,y,z));
     } catch (ExecutionException e) {
       throw Throwables.propagate(e);
@@ -86,8 +90,10 @@ public final class TileResource {
   @Path("{z}/{x}/{y}/vectortile.pbf")
   @Timed
   @Produces(MediaType.APPLICATION_OCTET_STREAM)
-  public byte[] asVectorTileFormat(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y) {
+  public byte[] asVectorTileFormat(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y,
+                                   @Context HttpServletResponse response) {
     try {
+      addAllAccessControlHeader(response);
       return VT_CACHE.get(new XYZ(x,y,z));
     } catch (ExecutionException e) {
       throw Throwables.propagate(e);
@@ -117,5 +123,12 @@ public final class TileResource {
                          GEOMETRY_FACTORY.createPoint(new Coordinate(e.getKey().x, e.getKey().y)));
     }
     return encoder.encode();
+  }
+
+  /**
+   * Adds the header allowing the tiles be used across domains.
+   */
+  private static void addAllAccessControlHeader(HttpServletResponse response) {
+    response.setHeader("Access-Control-Allow-Origin", "*");
   }
 }
