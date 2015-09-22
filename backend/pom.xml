@@ -26,7 +26,6 @@
   </repositories>
 
   <properties>
-    <!-- TODO: Investigate why 2.6.1 generates uncompilable code -->
     <protoc.version>2.6.1</protoc.version>
     <guava.version>18.0</guava.version>
     <!-- laziness: rely on transient dependencies from DW -->
