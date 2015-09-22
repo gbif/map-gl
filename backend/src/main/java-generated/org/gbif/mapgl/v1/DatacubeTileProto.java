@@ -8,10 +8,10 @@ public final class DatacubeTileProto {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
-  public interface DatacubeTileOrBuilder
-      extends com.google.protobuf.MessageLiteOrBuilder {
+  public interface DatacubeTileOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.gbif.mapgl.v1.DatacubeTile)
+      com.google.protobuf.MessageLiteOrBuilder {
 
-    // repeated uint32 x = 1 [packed = true];
     /**
      * <code>repeated uint32 x = 1 [packed = true];</code>
      *
@@ -37,7 +37,6 @@ public final class DatacubeTileProto {
      */
     int getX(int index);
 
-    // repeated uint32 y = 2 [packed = true];
     /**
      * <code>repeated uint32 y = 2 [packed = true];</code>
      */
@@ -51,7 +50,6 @@ public final class DatacubeTileProto {
      */
     int getY(int index);
 
-    // repeated .org.gbif.mapgl.v1.DatacubeTile.Channel channel = 3;
     /**
      * <code>repeated .org.gbif.mapgl.v1.DatacubeTile.Channel channel = 3;</code>
      *
@@ -86,7 +84,6 @@ public final class DatacubeTileProto {
    * A basic tile with a set of channels for x,y located pixels.
    * The data channel must the same length as the pixels so that the data matches the pixel - that is, the
    * channel data item at index 0 represents the data for the pixel defined by the pixel indexed at x[0] and y[0].
-   *
    * This is a simple tile used only for demonstration purposes.  Changes to make:
    *  i.   Make the pixels relative to the previous (improves compression)
    *  ii.  Support necessary metadata for channels
@@ -95,14 +92,15 @@ public final class DatacubeTileProto {
    * </pre>
    */
   public static final class DatacubeTile extends
-      com.google.protobuf.GeneratedMessageLite
-      implements DatacubeTileOrBuilder {
+      com.google.protobuf.GeneratedMessageLite implements
+      // @@protoc_insertion_point(message_implements:org.gbif.mapgl.v1.DatacubeTile)
+      DatacubeTileOrBuilder {
     // Use DatacubeTile.newBuilder() to construct.
     private DatacubeTile(com.google.protobuf.GeneratedMessageLite.Builder builder) {
       super(builder);
-
+      this.unknownFields = builder.getUnknownFields();
     }
-    private DatacubeTile(boolean noInit) {}
+    private DatacubeTile(boolean noInit) { this.unknownFields = com.google.protobuf.ByteString.EMPTY;}
 
     private static final DatacubeTile defaultInstance;
     public static DatacubeTile getDefaultInstance() {
@@ -113,12 +111,18 @@ public final class DatacubeTileProto {
       return defaultInstance;
     }
 
+    private final com.google.protobuf.ByteString unknownFields;
     private DatacubeTile(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       initFields();
       int mutable_bitField0_ = 0;
+      com.google.protobuf.ByteString.Output unknownFieldsOutput =
+          com.google.protobuf.ByteString.newOutput();
+      com.google.protobuf.CodedOutputStream unknownFieldsCodedOutput =
+          com.google.protobuf.CodedOutputStream.newInstance(
+              unknownFieldsOutput);
       try {
         boolean done = false;
         while (!done) {
@@ -128,7 +132,7 @@ public final class DatacubeTileProto {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(input,
+              if (!parseUnknownField(input, unknownFieldsCodedOutput,
                                      extensionRegistry, tag)) {
                 done = true;
               }
@@ -201,6 +205,13 @@ public final class DatacubeTileProto {
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
           channel_ = java.util.Collections.unmodifiableList(channel_);
         }
+        try {
+          unknownFieldsCodedOutput.flush();
+        } catch (java.io.IOException e) {
+        // Should not happen
+        } finally {
+          unknownFields = unknownFieldsOutput.toByteString();
+        }
         makeExtensionsImmutable();
       }
     }
@@ -219,10 +230,10 @@ public final class DatacubeTileProto {
       return PARSER;
     }
 
-    public interface ChannelOrBuilder
-        extends com.google.protobuf.MessageLiteOrBuilder {
+    public interface ChannelOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:org.gbif.mapgl.v1.DatacubeTile.Channel)
+        com.google.protobuf.MessageLiteOrBuilder {
 
-      // repeated uint32 value = 1 [packed = true];
       /**
        * <code>repeated uint32 value = 1 [packed = true];</code>
        */
@@ -240,14 +251,15 @@ public final class DatacubeTileProto {
      * Protobuf type {@code org.gbif.mapgl.v1.DatacubeTile.Channel}
      */
     public static final class Channel extends
-        com.google.protobuf.GeneratedMessageLite
-        implements ChannelOrBuilder {
+        com.google.protobuf.GeneratedMessageLite implements
+        // @@protoc_insertion_point(message_implements:org.gbif.mapgl.v1.DatacubeTile.Channel)
+        ChannelOrBuilder {
       // Use Channel.newBuilder() to construct.
       private Channel(com.google.protobuf.GeneratedMessageLite.Builder builder) {
         super(builder);
-
+        this.unknownFields = builder.getUnknownFields();
       }
-      private Channel(boolean noInit) {}
+      private Channel(boolean noInit) { this.unknownFields = com.google.protobuf.ByteString.EMPTY;}
 
       private static final Channel defaultInstance;
       public static Channel getDefaultInstance() {
@@ -258,12 +270,18 @@ public final class DatacubeTileProto {
         return defaultInstance;
       }
 
+      private final com.google.protobuf.ByteString unknownFields;
       private Channel(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         initFields();
         int mutable_bitField0_ = 0;
+        com.google.protobuf.ByteString.Output unknownFieldsOutput =
+            com.google.protobuf.ByteString.newOutput();
+        com.google.protobuf.CodedOutputStream unknownFieldsCodedOutput =
+            com.google.protobuf.CodedOutputStream.newInstance(
+                unknownFieldsOutput);
         try {
           boolean done = false;
           while (!done) {
@@ -273,7 +291,7 @@ public final class DatacubeTileProto {
                 done = true;
                 break;
               default: {
-                if (!parseUnknownField(input,
+                if (!parseUnknownField(input, unknownFieldsCodedOutput,
                                        extensionRegistry, tag)) {
                   done = true;
                 }
@@ -311,6 +329,13 @@ public final class DatacubeTileProto {
           if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
             value_ = java.util.Collections.unmodifiableList(value_);
           }
+          try {
+            unknownFieldsCodedOutput.flush();
+          } catch (java.io.IOException e) {
+          // Should not happen
+          } finally {
+            unknownFields = unknownFieldsOutput.toByteString();
+          }
           makeExtensionsImmutable();
         }
       }
@@ -329,7 +354,6 @@ public final class DatacubeTileProto {
         return PARSER;
       }
 
-      // repeated uint32 value = 1 [packed = true];
       public static final int VALUE_FIELD_NUMBER = 1;
       private java.util.List<java.lang.Integer> value_;
       /**
@@ -359,7 +383,8 @@ public final class DatacubeTileProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized != -1) return isInitialized == 1;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
 
         memoizedIsInitialized = 1;
         return true;
@@ -375,6 +400,7 @@ public final class DatacubeTileProto {
         for (int i = 0; i < value_.size(); i++) {
           output.writeUInt32NoTag(value_.get(i));
         }
+        output.writeRawBytes(unknownFields);
       }
 
       private int memoizedSerializedSize = -1;
@@ -397,6 +423,7 @@ public final class DatacubeTileProto {
           }
           valueMemoizedSerializedSize = dataSize;
         }
+        size += unknownFields.size();
         memoizedSerializedSize = size;
         return size;
       }
@@ -474,7 +501,9 @@ public final class DatacubeTileProto {
       public static final class Builder extends
           com.google.protobuf.GeneratedMessageLite.Builder<
             org.gbif.mapgl.v1.DatacubeTileProto.DatacubeTile.Channel, Builder>
-          implements org.gbif.mapgl.v1.DatacubeTileProto.DatacubeTile.ChannelOrBuilder {
+          implements
+          // @@protoc_insertion_point(builder_implements:org.gbif.mapgl.v1.DatacubeTile.Channel)
+          org.gbif.mapgl.v1.DatacubeTileProto.DatacubeTile.ChannelOrBuilder {
         // Construct using org.gbif.mapgl.v1.DatacubeTileProto.DatacubeTile.Channel.newBuilder()
         private Builder() {
           maybeForceBuilderInitialization();
@@ -532,6 +561,8 @@ public final class DatacubeTileProto {
             }
             
           }
+          setUnknownFields(
+              getUnknownFields().concat(other.unknownFields));
           return this;
         }
 
@@ -558,7 +589,6 @@ public final class DatacubeTileProto {
         }
         private int bitField0_;
 
-        // repeated uint32 value = 1 [packed = true];
         private java.util.List<java.lang.Integer> value_ = java.util.Collections.emptyList();
         private void ensureValueIsMutable() {
           if (!((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -610,7 +640,8 @@ public final class DatacubeTileProto {
         public Builder addAllValue(
             java.lang.Iterable<? extends java.lang.Integer> values) {
           ensureValueIsMutable();
-          super.addAll(values, value_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, value_);
           
           return this;
         }
@@ -635,7 +666,6 @@ public final class DatacubeTileProto {
       // @@protoc_insertion_point(class_scope:org.gbif.mapgl.v1.DatacubeTile.Channel)
     }
 
-    // repeated uint32 x = 1 [packed = true];
     public static final int X_FIELD_NUMBER = 1;
     private java.util.List<java.lang.Integer> x_;
     /**
@@ -671,7 +701,6 @@ public final class DatacubeTileProto {
     }
     private int xMemoizedSerializedSize = -1;
 
-    // repeated uint32 y = 2 [packed = true];
     public static final int Y_FIELD_NUMBER = 2;
     private java.util.List<java.lang.Integer> y_;
     /**
@@ -695,7 +724,6 @@ public final class DatacubeTileProto {
     }
     private int yMemoizedSerializedSize = -1;
 
-    // repeated .org.gbif.mapgl.v1.DatacubeTile.Channel channel = 3;
     public static final int CHANNEL_FIELD_NUMBER = 3;
     private java.util.List<org.gbif.mapgl.v1.DatacubeTileProto.DatacubeTile.Channel> channel_;
     /**
@@ -759,7 +787,8 @@ public final class DatacubeTileProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -785,6 +814,7 @@ public final class DatacubeTileProto {
       for (int i = 0; i < channel_.size(); i++) {
         output.writeMessage(3, channel_.get(i));
       }
+      output.writeRawBytes(unknownFields);
     }
 
     private int memoizedSerializedSize = -1;
@@ -825,6 +855,7 @@ public final class DatacubeTileProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, channel_.get(i));
       }
+      size += unknownFields.size();
       memoizedSerializedSize = size;
       return size;
     }
@@ -904,7 +935,6 @@ public final class DatacubeTileProto {
      * A basic tile with a set of channels for x,y located pixels.
      * The data channel must the same length as the pixels so that the data matches the pixel - that is, the
      * channel data item at index 0 represents the data for the pixel defined by the pixel indexed at x[0] and y[0].
-     *
      * This is a simple tile used only for demonstration purposes.  Changes to make:
      *  i.   Make the pixels relative to the previous (improves compression)
      *  ii.  Support necessary metadata for channels
@@ -915,7 +945,9 @@ public final class DatacubeTileProto {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageLite.Builder<
           org.gbif.mapgl.v1.DatacubeTileProto.DatacubeTile, Builder>
-        implements org.gbif.mapgl.v1.DatacubeTileProto.DatacubeTileOrBuilder {
+        implements
+        // @@protoc_insertion_point(builder_implements:org.gbif.mapgl.v1.DatacubeTile)
+        org.gbif.mapgl.v1.DatacubeTileProto.DatacubeTileOrBuilder {
       // Construct using org.gbif.mapgl.v1.DatacubeTileProto.DatacubeTile.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
@@ -1007,6 +1039,8 @@ public final class DatacubeTileProto {
           }
           
         }
+        setUnknownFields(
+            getUnknownFields().concat(other.unknownFields));
         return this;
       }
 
@@ -1033,7 +1067,6 @@ public final class DatacubeTileProto {
       }
       private int bitField0_;
 
-      // repeated uint32 x = 1 [packed = true];
       private java.util.List<java.lang.Integer> x_ = java.util.Collections.emptyList();
       private void ensureXIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1109,7 +1142,8 @@ public final class DatacubeTileProto {
       public Builder addAllX(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureXIsMutable();
-        super.addAll(values, x_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, x_);
         
         return this;
       }
@@ -1127,7 +1161,6 @@ public final class DatacubeTileProto {
         return this;
       }
 
-      // repeated uint32 y = 2 [packed = true];
       private java.util.List<java.lang.Integer> y_ = java.util.Collections.emptyList();
       private void ensureYIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
@@ -1179,7 +1212,8 @@ public final class DatacubeTileProto {
       public Builder addAllY(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureYIsMutable();
-        super.addAll(values, y_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, y_);
         
         return this;
       }
@@ -1193,7 +1227,6 @@ public final class DatacubeTileProto {
         return this;
       }
 
-      // repeated .org.gbif.mapgl.v1.DatacubeTile.Channel channel = 3;
       private java.util.List<org.gbif.mapgl.v1.DatacubeTileProto.DatacubeTile.Channel> channel_ =
         java.util.Collections.emptyList();
       private void ensureChannelIsMutable() {
@@ -1335,7 +1368,8 @@ public final class DatacubeTileProto {
       public Builder addAllChannel(
           java.lang.Iterable<? extends org.gbif.mapgl.v1.DatacubeTileProto.DatacubeTile.Channel> values) {
         ensureChannelIsMutable();
-        super.addAll(values, channel_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, channel_);
 
         return this;
       }

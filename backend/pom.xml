@@ -27,7 +27,7 @@
 
   <properties>
     <!-- TODO: Investigate why 2.6.1 generates uncompilable code -->
-    <protoc.version>2.5.0</protoc.version>
+    <protoc.version>2.6.1</protoc.version>
     <guava.version>18.0</guava.version>
     <!-- laziness: rely on transient dependencies from DW -->
     <dropwizard.version>0.7.1</dropwizard.version>
