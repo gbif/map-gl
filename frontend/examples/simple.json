@@ -1,0 +1,43 @@
+{
+  "version": 8,
+  "name": "Mapbox Streets",
+  "sources": {
+    "composite": {
+      "url": "mapbox:\/\/mapbox.mapbox-streets-v6",
+      "type": "vector"
+    }
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "minzoom": 0,
+      "maxzoom": 22,
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "background-color": "#023b3f"
+      }
+    },
+    {
+      "minzoom": 0,
+      "layout": {
+        "visibility": "visible"
+      },
+      "maxzoom": 22,
+      "type": "fill",
+      "source": "composite",
+      "id": "water",
+      "paint": {
+        "fill-color": "#7173ab"
+      },
+      "source-layer": "water"
+    }
+  ],
+  "created": 0,
+  "modified": 0,
+  "owner": "mapbox",
+  "id": "streets-v8",
+  "draft": false
+}

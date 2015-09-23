@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoidGltcm9iZXJ0c29uMTAwIiwiYSI6IlRxTFEzOUkifQ.UlS8frv1bZZPdUfDp-zolQ';
+var map = new mapboxgl.Map({
+  container: 'map', // container id
+  style: 'mapbox://styles/mapbox/streets-v8', //stylesheet location
+  center: [-0, 0], // starting position
+  zoom: 0 // starting zoom
+});
+
+
+map.on('style.load', function() {
+
+
+
+
+
+map.addSource('vecortest', {
+        "type": "vector",
+        "tiles": [
+            "https://dl.dropboxusercontent.com/u/608155/transient/vt-{z}-{x}-{y}.pbf"
+        ],
+        "maxzoom": 14
+    });
+
+    map.addLayer({
+        "id": "vtest",
+        "source": "vecortest",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+            "circle-radius": 2,
+            "circle-color": "#f00"
+        }
+    });
+
+});
+
+
+
+</script>
+
+</body>
+</html>

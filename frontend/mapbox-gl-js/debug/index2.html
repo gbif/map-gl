@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapbox GL JS debug page</title>
+    <meta charset='utf-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel='stylesheet' href='../dist/mapbox-gl.css' />
+    <style>
+        body { margin: 0; padding: 0; }
+        html, body, #map { height: 100%; }
+        .range{
+        	position:absolute;
+        	left: 20px; bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div id='map'></div>
+<input class="range" type="range" id="myRange" min="0" max="100" value="50">
+<script src='mapbox-gl.js'></script>
+<script src='site2.js'></script>
+</body>
+</html>

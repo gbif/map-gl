@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapbox GL JS debug page</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel='stylesheet' href='/mapbox-gl-js/dist/mapbox-gl.css' />
+    <style>
+        body { margin: 0; padding: 0; }
+        html, body, #map { height: 100%; }
+        .back{
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            position:absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: black;
+            border-radius: 100%;
+            box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            vertical-align: middle;
+            text-decoration:none;
+        }
+    </style>
+</head>
+
+<body>
+<div id='map'></div>
+<a class="back" href="../">&#65513;</a>
+<script src='/mapbox-gl-js/dist/mapbox-gl.js'></script>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoidGltcm9iZXJ0c29uMTAwIiwiYSI6IlRxTFEzOUkifQ.UlS8frv1bZZPdUfDp-zolQ';
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: '../simple.json'
+});
+
+map.addControl(new mapboxgl.Navigation());
+
+map.on('style.load', function() {
+
+    map.addSource('gbif', {
+        "type": "datacube",
+        "tiles": [
+            "http://localhost:8080/api/{z}/{x}/{y}/datacube.pbf"
+        ],
+        "maxzoom": 10        
+    });
+
+    var circleRadius = 1.5;
+    map.addLayer({
+        "id": "gbif0",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "filter": ["all", [">=", "count", 0],["<", "count", 10]],
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": circleRadius,
+          "circle-color": "#FFFF00"
+        }
+    });
+    map.addLayer({
+        "id": "gbif1",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "filter": ["all", [">=", "count", 10],["<", "count", 100]],
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": circleRadius,
+          "circle-color": "#FFCC00"
+        }
+    });
+    map.addLayer({
+        "id": "gbif2",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "filter": ["all", [">=", "count", 100],["<", "count", 1000]],
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": circleRadius,
+          "circle-color": "#FF9900"
+        }
+    });
+    map.addLayer({
+        "id": "gbif3",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "filter": ["all", [">=", "count", 1000],["<", "count", 10000]],
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": circleRadius,
+          "circle-color": "#FF6600"
+        }
+    });
+    map.addLayer({
+        "id": "gbif4",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "filter": ["all", [">=", "count", 10000],["<", "count", 100000]],
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": circleRadius,
+          "circle-color": "#FF3300"
+        }
+    });
+    map.addLayer({
+        "id": "gbif5",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "filter": [">=", "count", 100000],
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": circleRadius,
+          "circle-color": "#CC0000"
+        }
+    });
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapbox GL JS debug page</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel='stylesheet' href='/mapbox-gl-js/dist/mapbox-gl.css' />
+    <style>
+        body { margin: 0; padding: 0; }
+        html, body, #map { height: 100%; }
+        .range{
+            position:absolute;
+            left: 20px; bottom: 20px;
+        }
+        .range>span{
+            background: black;
+            color: white;
+            padding: 5px;
+        }
+        .back{
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            position:absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: black;
+            border-radius: 100%;
+            box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            vertical-align: middle;
+            text-decoration:none;
+        }
+    </style>
+</head>
+
+<body>
+<div id='map'></div>
+<a class="back" href="../">&#65513;</a>
+<div class="range">
+    <input type="range" id="myRange" min="0" max="100" value="0">
+    <span>Threshold <span></span></span>
+</div>
+<script src='/mapbox-gl-js/dist/mapbox-gl.js'></script>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoidGltcm9iZXJ0c29uMTAwIiwiYSI6IlRxTFEzOUkifQ.UlS8frv1bZZPdUfDp-zolQ';
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: '../simple.json'
+});
+
+map.addControl(new mapboxgl.Navigation());
+
+map.on('style.load', function() {
+
+    map.addSource('gbif', {
+        "type": "datacube",
+        "tiles": [
+            "http://localhost:8080/api/{z}/{x}/{y}/datacube.pbf"
+        ],
+        "maxzoom": 10        
+    });
+
+    var circleRadius = 1.5;
+    map.addLayer({
+        "id": "gbif0",
+        "source": "gbif",
+        "source-layer": "occurrence",
+        "type": "circle",
+        "minzoom": 0,
+        "maxzoom": 20,
+        "paint": {
+          "circle-radius": circleRadius,
+          "circle-color": "#FFFF00"
+        }
+    });
+
+    var rangeslider = document.getElementById('myRange');
+    var thresholdElement = document.querySelector('.range>span>span');
+    thresholdElement.innerHTML = rangeslider.value;
+    var changeTimer;
+    rangeslider.addEventListener("input", function() {
+        if (changeTimer) {
+            clearTimeout (changeTimer);
+        }
+        changeTimer = setTimeout(function () {
+            filterMap();
+        }, 100);
+    }, false);
+
+    function filterMap() {
+        var value = Math.pow(parseInt(rangeslider.value), 3);
+        thresholdElement.innerHTML = value;
+        map.setFilter("gbif0", ["all", [">", "count", value]]);
+        map.render();
+    }
+});
+
+</script>
+</body>
+</html>
